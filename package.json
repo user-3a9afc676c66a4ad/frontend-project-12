@@ -1,0 +1,25 @@
+{
+  "name": "@hexlet/code",
+  "version": "1.0.0",
+  "description": "Slack-чат",
+  "main": "src/index.js",
+  "scripts": {
+    "postinstall": "npm ci --prefix frontend",
+    "build": "npm run build --prefix frontend",
+    "start": "npx start-server -s ./frontend/build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/user-3a9afc676c66a4ad/frontend-project-12.git"
+  },
+  "author": "Osipov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/user-3a9afc676c66a4ad/frontend-project-12/issues"
+  },
+  "homepage": "https://github.com/user-3a9afc676c66a4ad/frontend-project-12#readme",
+  "dependencies": {
+    "@hexlet/chat-server": "^2.0.4"
+  }
+}
