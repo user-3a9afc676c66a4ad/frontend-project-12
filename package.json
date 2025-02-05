@@ -4,9 +4,9 @@
   "description": "Slack-чат",
   "main": "src/index.js",
   "scripts": {
-    "postinstall": "npm ci --prefix frontend",
+    "postinstall": "cd frontend && npm ci",
     "build": "npm run build --prefix frontend",
-    "start": "npx start-server -s ./frontend/build",
+    "start": "start-server -s ./frontend/build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/user-3a9afc676c66a4ad/frontend-project-12#readme",
   "dependencies": {
-    "@hexlet/chat-server": "^2.0.4"
+    "@hexlet/chat-server": "^2.0.4",
+    "@reduxjs/toolkit": "^2.5.1"
   }
 }
