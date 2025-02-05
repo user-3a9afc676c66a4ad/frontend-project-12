@@ -2,7 +2,7 @@
 
 [![Actions Status](https://github.com/user-3a9afc676c66a4ad/frontend-project-12/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/user-3a9afc676c66a4ad/frontend-project-12/actions)
 
-App is deployed on [Render] (https://frontend-project-12-izvd.onrender.com)
+App is deployed on [Render](https://frontend-project-12-izvd.onrender.com)
 
 ### Description
 
@@ -15,7 +15,7 @@ username: admin, password: admin
 
 ## Usage
 
-node v18.19.1
+node.js v16 or later recommended
 
 ## Installation
 
