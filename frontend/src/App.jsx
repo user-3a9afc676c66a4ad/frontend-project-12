@@ -1,18 +1,17 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import HomePage from './Pages/HomePage';
-import LoginPage from './Pages/LoginPage';
-import NotFoundPage from './Pages/NotFoundPage';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import LoginPage from './pages/LoginPage.jsx';
+import ChatPage from './pages/ChatPage.jsx';
 
-function App() {
+const App = () => {
+  const isAuthenticated = !!localStorage.getItem('token');
   return (
-    <BrowserRouter>
+    <Router>
       <Routes>
-        <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="*" element={<NotFoundPage />} />
+        <Route path="/" element={isAuthenticated ? <ChatPage /> : <Navigate to="/login" />} />
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
-}
+};
 
 export default App;
