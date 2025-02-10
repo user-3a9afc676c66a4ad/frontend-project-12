@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
@@ -14,9 +14,19 @@ const ChatPage = () => {
   const [selectedChannel, setSelectedChannel] = useState(null);
   const defaultChannelId = channels[0]?.id || '';
 
+  const isInitialRender = useRef(true);
+
   useEffect(() => {
-    dispatch(fetchChatData());
-  }, [dispatch]);
+    dispatch(fetchChatData()).then(() => {
+      if (channels.length > 0) {
+        if (isInitialRender.current) {
+          // При первом рендере выбираем канал 'general'
+          setCurrentChannel(channels.find((channel) => channel.name === 'general')?.id || '');
+          isInitialRender.current = false; // После первого рендера флаг устанавливаем в false
+        }
+      }
+    });
+  }, [dispatch, channels]);
 
   const handleChannelChange = (channelId) => {
     setCurrentChannel(channelId);
@@ -71,10 +81,10 @@ const ChatPage = () => {
   return (
     <div className="container py-4">
       <div className="row">
+        {/* Секция каналов */}
         <div className="col-md-4 border-end">
           <h4>Channels</h4>
 
-          {status === 'loading' && <p>Loading channels...</p>}
           {status === 'failed' && <p className="text-danger">{error}</p>}
 
           <ul className="list-group">
@@ -113,8 +123,10 @@ const ChatPage = () => {
           </ul>
         </div>
 
+        {/* Секция сообщений и отправки */}
         <div className="col-md-8">
           <h4>Chat in {currentChannel ? `#${channels.find((ch) => ch.id === currentChannel)?.name}` : ''}</h4>
+
           <div className="chat-box border rounded p-3 mb-3" style={{ height: '300px', overflowY: 'scroll' }}>
             {messages
               .filter((msg) => msg.channelId === currentChannel)
@@ -142,12 +154,8 @@ const ChatPage = () => {
             )}
           </Formik>
 
-          <Formik
-            initialValues={{ name: '' }}
-            validationSchema={validationSchema}
-            onSubmit={handleAddChannel}
-            validateOnBlur={false} // Отключаем автоматическую валидацию при потере фокуса
-          >
+          {/* Добавление нового канала */}
+          <Formik initialValues={{ name: '' }} validationSchema={validationSchema} onSubmit={handleAddChannel} validateOnBlur={false}>
             {({ errors, touched, handleBlur, handleChange, setFieldTouched, values }) => (
               <Form className="mt-3">
                 <div className="input-group">
@@ -159,26 +167,24 @@ const ChatPage = () => {
                       const value = e.target.value;
                       handleChange(e);
 
-                      // Если поле очищено, сбрасываем его состояние в "не тронутое"
                       if (value.trim() === '') {
-                        setFieldTouched('name', false, false); // Сбрасываем touched и ошибки
+                        setFieldTouched('name', false, false);
                       }
                     }}
                     onBlur={(e) => {
-                      // Если поле пустое, не запускаем валидацию
                       if (values.name.trim() === '') {
                         setFieldTouched('name', false, false);
                         return;
                       }
-                      handleBlur(e); // В остальных случаях выполняем стандартную валидацию
+                      handleBlur(e);
                     }}
-                    className={`form-control ${touched.name ? (errors.name ? 'is-invalid' : 'is-valid') : ''}`}
+                    className={`form-control ${touched.name && errors.name ? 'is-invalid' : touched.name ? 'is-valid' : ''}`}
                   />
                   <button type="submit" className="btn btn-success">
                     Add Channel
                   </button>
                   {touched.name && errors.name && <div className="invalid-feedback">{errors.name}</div>}
-                  {touched.name && !errors.name && <div className="valid-feedback">Looks good!</div>}
+                  {touched.name && !errors.name && <div className="valid-feedback"></div>}
                 </div>
               </Form>
             )}
@@ -186,6 +192,7 @@ const ChatPage = () => {
         </div>
       </div>
 
+      {/* Модальные окна для удаления и переименования каналов */}
       <Modal show={modalType === 'delete'} onHide={() => setModalType(null)}>
         <Modal.Header closeButton>
           <Modal.Title>Delete Channel</Modal.Title>
