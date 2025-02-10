@@ -1,38 +1,58 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchChatData, sendMessage } from '../store/chatSlice';
+import io from 'socket.io-client';
+
+const socket = io('http://localhost:5001'); // Подключение к серверу Socket.IO
 
 const ChatPage = () => {
   const dispatch = useDispatch();
-  const channels = useSelector((state) => state.chat.channels || []); // Защита от undefined
-  const messages = useSelector((state) => state.chat.messages || []); // Защита от undefined
+  const channels = useSelector((state) => state.chat.channels);
+  const messages = useSelector((state) => state.chat.messages);
   const status = useSelector((state) => state.chat.status);
   const error = useSelector((state) => state.chat.error);
+  const [selectedChannel, setSelectedChannel] = useState('1'); // По умолчанию канал General
   const [newMessage, setNewMessage] = useState('');
 
+  // Загрузка данных чатов при монтировании компонента
   useEffect(() => {
     dispatch(fetchChatData());
+
+    // Подключение к WebSocket для получения сообщений
+    socket.on('newMessage', (message) => {
+      dispatch(sendMessage({ channelId: message.channelId, body: message.body }));
+    });
+
+    return () => {
+      socket.off('newMessage');
+    };
   }, [dispatch]);
   const handleChannelClick = (channelId) => {
     setSelectedChannel(channelId);
   };
 
-  const handleMessageSubmit = (e) => {
+  const handleSendMessage = async (e) => {
     e.preventDefault();
-    if (newMessage.trim() && selectedChannel) {
-      dispatch(
+    if (newMessage.trim()) {
+      await dispatch(
         sendMessage({
           channelId: selectedChannel,
-          body: newMessage.trim(),
+          body: newMessage,
         })
       );
       setNewMessage('');
+      socket.emit('sendMessage', {
+        channelId: selectedChannel,
+        body: newMessage,
+      });
     }
   };
 
   if (status === 'loading') return <p className="text-center mt-5">Loading...</p>;
   if (status === 'failed') return <p className="text-danger mt-5">Error: {error}</p>;
+
   const filteredMessages = selectedChannel ? messages.filter((msg) => msg.channelId === selectedChannel) : [];
+
   return (
     <div className="container mt-5">
       <div className="row">
@@ -66,7 +86,7 @@ const ChatPage = () => {
             <div className="card-header bg-secondary text-white">
               <h5>Messages</h5>
             </div>
-            <div className="card-body overflow-auto" style={{ height: '300px' }}>
+            <div className="card-body overflow-auto" style={{ height: '400px' }}>
               {filteredMessages.length > 0 ? (
                 filteredMessages.map((message) => (
                   <div key={message.id} className="mb-2 p-2 bg-light rounded">
@@ -81,23 +101,13 @@ const ChatPage = () => {
                 <p className="text-muted">Please select a channel</p>
               )}
             </div>
-            <div className="card-footer">
-              <form onSubmit={handleMessageSubmit}>
-                <div className="input-group">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Type your message here..."
-                    value={newMessage}
-                    onChange={(e) => setNewMessage(e.target.value)}
-                    disabled={!selectedChannel}
-                  />
-                  <button type="submit" className="btn btn-primary" disabled={!selectedChannel}>
-                    Send
-                  </button>
-                </div>
-              </form>
-            </div>
+            {/* Input для отправки сообщений */}
+            <form onSubmit={handleSendMessage} className="p-2 bg-light">
+              <input type="text" placeholder="Type a message..." value={newMessage} onChange={(e) => setNewMessage(e.target.value)} className="form-control" />
+              <button type="submit" className="btn btn-primary mt-2 btn-block">
+                Send
+              </button>
+            </form>
           </div>
         </div>
       </div>
