@@ -1,6 +1,7 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import LoginPage from './pages/LoginPage.jsx';
-import ChatPage from './pages/ChatPage.jsx';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import LoginPage from './pages/LoginPage';
+import ChatPage from './pages/ChatPage';
 import SignupPage from './pages/SignupPage';
 
 const isAuthenticated = !!localStorage.getItem('token');
@@ -22,20 +23,24 @@ const App = () => {
 };
 
 const Header = () => {
+  const { t } = useTranslation();
+
   const handleLogout = () => {
     localStorage.removeItem('token');
-    window.location.reload(); // Обновляем страницу для очистки состояния
+    window.location.reload();
   };
+
   const isAuth = !!localStorage.getItem('token');
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
         <a className="navbar-brand" href="/">
-          Hexlet Chat
+          {t('header.brand')}
         </a>
         {isAuth && (
           <button className="btn btn-outline-danger ml-auto" onClick={handleLogout}>
-            Выйти
+            {t('header.logout')}
           </button>
         )}
       </div>

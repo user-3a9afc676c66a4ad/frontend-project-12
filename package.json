@@ -22,6 +22,7 @@
   "homepage": "https://github.com/user-3a9afc676c66a4ad/frontend-project-12#readme",
   "dependencies": {
     "@hexlet/chat-server": "^2.0.4",
-    "@reduxjs/toolkit": "^2.5.1"
+    "@reduxjs/toolkit": "^2.5.1",
+    "fast-jwt": "^5.0.5"
   }
 }
