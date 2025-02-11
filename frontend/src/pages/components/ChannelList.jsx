@@ -3,7 +3,14 @@ import { useEffect, useRef } from 'react';
 import { Dropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
-const ChannelList = ({ channels, currentChannel, setCurrentChannel, setModalType, setSelectedChannel }) => {
+const ChannelList = ({
+  // prettier-ignore
+  channels,
+  currentChannel,
+  setCurrentChannel,
+  setModalType,
+  setSelectedChannel,
+}) => {
   const { t } = useTranslation();
   const channelListRef = useRef(null);
 

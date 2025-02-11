@@ -61,7 +61,12 @@ const ChatPage = () => {
 
   const handleRemoveChannel = async () => {
     try {
-      if (selectedChannel && selectedChannel.id !== defaultChannelId && !isProtectedChannel(selectedChannel)) {
+      if (
+        // prettier-ignore
+        selectedChannel
+        && selectedChannel.id !== defaultChannelId
+        && !isProtectedChannel(selectedChannel)
+      ) {
         await dispatch(removeExistingChannel(selectedChannel.id)).unwrap();
         toast.success(t('chat.notifications.channelDeleted'));
         setCurrentChannel(defaultChannelId);
@@ -116,7 +121,15 @@ const ChatPage = () => {
   return (
     <div className="row h-100 bg-white flex-md-row">
       <ToastContainer position="top-right" autoClose={3000} />
-      <ChannelList channels={channels} currentChannel={currentChannel} setCurrentChannel={setCurrentChannel} setModalType={setModalType} setSelectedChannel={setSelectedChannel} />
+
+      <ChannelList
+        // prettier-ignore
+        channels={channels}
+        currentChannel={currentChannel}
+        setCurrentChannel={setCurrentChannel}
+        setModalType={setModalType}
+        setSelectedChannel={setSelectedChannel}
+      />
       <div className="col p-0 h-100">
         <div className="d-flex flex-column h-100">
           <div className="bg-light mb-4 p-3 shadow-sm small">
