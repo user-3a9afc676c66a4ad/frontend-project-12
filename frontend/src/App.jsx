@@ -1,5 +1,11 @@
 import { useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import {
+  // prettier-ignore
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { AuthProvider, useAuth } from './contexts/AuthCont';
@@ -15,7 +21,7 @@ const App = () => {
   useEffect(() => {
     initializeSocket({ dispatch });
   }, [dispatch]);
-
+  // prettier-ignore
   return (
     <ErrorBoundary>
       <Router>
@@ -27,25 +33,25 @@ const App = () => {
                 <Route
                   path="/login"
                   element={
-                    <ProtectedRoute redirectTo="/chat" inverse>
+                    (<ProtectedRoute redirectTo="/chat" inverse>
                       <LoginPage />
-                    </ProtectedRoute>
+                    </ProtectedRoute>)
                   }
                 />
                 <Route
                   path="/signup"
                   element={
-                    <ProtectedRoute redirectTo="/chat" inverse>
+                    (<ProtectedRoute redirectTo="/chat" inverse>
                       <SignupPage />
-                    </ProtectedRoute>
+                    </ProtectedRoute>)
                   }
                 />
                 <Route
                   path="/chat"
                   element={
-                    <ProtectedRoute redirectTo="/login">
+                    (<ProtectedRoute redirectTo="/login">
                       <ChatPage />
-                    </ProtectedRoute>
+                    </ProtectedRoute>)
                   }
                 />
                 <Route path="/" element={<Navigate to="/login" replace />} />

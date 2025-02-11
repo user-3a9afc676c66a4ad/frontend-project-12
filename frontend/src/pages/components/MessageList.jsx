@@ -41,7 +41,13 @@ const MessageList = ({ messages, currentChannel, newMessage }) => {
         .filter((msg) => msg.channelId === currentChannel)
         .map((message) => (
           <div key={message.id} className="text-break mb-2">
-            <strong>{message.username}:</strong>
+            <strong>
+              {
+                // prettier-ignore
+                message.username
+              }
+              :
+            </strong>
             {` ${message.body}`}
           </div>
         ))}

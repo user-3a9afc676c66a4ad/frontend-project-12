@@ -5,7 +5,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast, ToastContainer } from 'react-toastify';
 import leoProfanity from 'leo-profanity';
 import * as Yup from 'yup';
-import { fetchChatData, sendMessage, addNewChannel, removeExistingChannel, renameExistingChannel } from '../store/chatSlice';
+import {
+  // prettier-ignore
+  fetchChatData,
+  sendMessage,
+  addNewChannel,
+  removeExistingChannel,
+  renameExistingChannel,
+} from '../store/chatSlice';
 
 import ChannelList from './components/ChannelList';
 import MessageList from './components/MessageList';
@@ -78,7 +85,7 @@ const ChatPage = () => {
       toast.error(t('chat.notifications.networkError'));
     }
   };
-
+  // prettier-ignore
   const handleRenameChannel = async (newName) => {
     try {
       if (selectedChannel && !isProtectedChannel(selectedChannel)) {
@@ -87,7 +94,7 @@ const ChatPage = () => {
           renameExistingChannel({
             id: selectedChannel.id,
             name: cleanedName,
-          })
+          }),
         ).unwrap();
         toast.success(t('chat.notifications.channelRenamed'));
         setModalType(null);
@@ -117,7 +124,7 @@ const ChatPage = () => {
       </div>
     );
   }
-
+  // prettier-ignore
   return (
     <div className="row h-100 bg-white flex-md-row">
       <ToastContainer position="top-right" autoClose={3000} />
@@ -134,7 +141,9 @@ const ChatPage = () => {
         <div className="d-flex flex-column h-100">
           <div className="bg-light mb-4 p-3 shadow-sm small">
             <p className="m-0">
-              <b># {channels.find((ch) => ch.id === currentChannel)?.name}</b>
+              <b>
+                #
+                {channels.find((ch) => ch.id === currentChannel)?.name}</b>
             </p>
             <span className="text-muted">{`${t('chat.messages', { count: messageCount })}`}</span>
           </div>

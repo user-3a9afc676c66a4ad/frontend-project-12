@@ -16,6 +16,8 @@
     "eslint-plugin-react": "^7.37.2",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.16",
+    "vite": "^6.0.5",
+    "@vitejs/plugin-react": "^4.3.4",
     "@reduxjs/toolkit": "^2.5.1",
     "@rollbar/react": "^0.12.0-beta",
     "axios": "^1.7.9",
@@ -44,9 +46,7 @@
   "devDependencies": {
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
-    "@vitejs/plugin-react": "^4.3.4",
     "eslint": "^9.17.0",
-    "sass-embedded": "^1.83.4",
-    "vite": "^6.0.5"
+    "sass-embedded": "^1.83.4"
   }
 }

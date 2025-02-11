@@ -135,5 +135,11 @@ const chatSlice = createSlice({
   },
 });
 
-export const { addMessage, addChannel, removeChannel, renameChannel } = chatSlice.actions;
+export const {
+  // prettier-ignore
+  addMessage,
+  addChannel,
+  removeChannel,
+  renameChannel,
+} = chatSlice.actions;
 export default chatSlice.reducer;

@@ -8,9 +8,9 @@ import './locales/i18n.js';
 
 const root = document.getElementById('root');
 const rootInstance = createRoot(root);
-
+// prettier-ignore
 rootInstance.render(
   <Provider store={store}>
     <App />
-  </Provider>
+  </Provider>,
 );

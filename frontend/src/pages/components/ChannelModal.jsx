@@ -4,7 +4,16 @@ import { Formik, Form, Field } from 'formik';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
-const ChannelModal = ({ modalType, setModalType, selectedChannel, handleAddChannel, handleRenameChannel, handleRemoveChannel, validationSchema }) => {
+const ChannelModal = ({
+  // prettier-ignore
+  modalType,
+  setModalType,
+  selectedChannel,
+  handleAddChannel,
+  handleRenameChannel,
+  handleRemoveChannel,
+  validationSchema,
+}) => {
   const { t } = useTranslation();
 
   const renderContent = () => {
