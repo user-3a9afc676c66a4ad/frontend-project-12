@@ -2,6 +2,8 @@ import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { fetchChatData, sendMessage, addChannel, removeChannel, renameChannel } from '../store/chatSlice';
 import { Modal, Button, Dropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
@@ -19,15 +21,19 @@ const ChatPage = () => {
   const isInitialRender = useRef(true);
 
   useEffect(() => {
-    dispatch(fetchChatData()).then(() => {
-      if (channels.length > 0) {
-        if (isInitialRender.current) {
-          setCurrentChannel(channels.find((channel) => channel.name === 'general')?.id || '');
-          isInitialRender.current = false;
+    dispatch(fetchChatData())
+      .then(() => {
+        if (channels.length > 0) {
+          if (isInitialRender.current) {
+            setCurrentChannel(channels.find((channel) => channel.name === 'general')?.id || '');
+            isInitialRender.current = false;
+          }
         }
-      }
-    });
-  }, [dispatch, channels]);
+      })
+      .catch(() => {
+        toast.error(t('chat.notifications.fetchError'));
+      });
+  }, [dispatch, channels, t]);
 
   const handleChannelChange = (channelId) => {
     setCurrentChannel(channelId);
@@ -35,15 +41,19 @@ const ChatPage = () => {
 
   const handleSendMessage = (messageBody) => {
     if (currentChannel) {
-      dispatch(sendMessage({ channelId: currentChannel, body: messageBody }));
+      dispatch(sendMessage({ channelId: currentChannel, body: messageBody })).catch(() => {
+        toast.error(t('chat.notifications.networkError'));
+      });
     }
   };
 
   const handleAddChannel = async (values, { resetForm }) => {
     try {
       await dispatch(addChannel(values.name)).unwrap();
+      toast.success(t('chat.notifications.channelCreated'));
       resetForm();
     } catch (err) {
+      toast.error(t('chat.notifications.networkError'));
       console.error(err);
     }
   };
@@ -64,6 +74,7 @@ const ChatPage = () => {
     try {
       if (selectedChannel) {
         await dispatch(renameChannel({ id: selectedChannel.id, name: newName })).unwrap();
+        toast.success(t('chat.notifications.channelRenamed'));
         setModalType(null);
       }
     } catch (err) {
@@ -81,6 +92,7 @@ const ChatPage = () => {
 
   return (
     <div className="container py-4">
+      <ToastContainer position="top-right" autoClose={3000} />
       <div className="row">
         {/* Секция каналов */}
         <div className="col-md-4 border-end">
