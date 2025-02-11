@@ -1,5 +1,6 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+
 const resources = {
   ru: {
     translation: {
@@ -8,34 +9,35 @@ const resources = {
         logout: 'Выйти',
       },
       login: {
-        title: 'Вход в Hexlet Chat',
-        username: 'Имя пользователя',
+        title: 'Войти',
+        username: 'Ваш ник',
         password: 'Пароль',
         login: 'Войти',
-        noAccount: 'Нет аккаунта в Hexlet Chat?',
+        noAccount: 'Нет аккаунта?',
         signup: 'Регистрация',
-        error: 'Неправильный логин или пароль',
+        error: 'Неверные имя пользователя или пароль',
       },
       signup: {
         title: 'Регистрация в Hexlet Chat',
-        username: 'Логин',
+        username: 'Имя пользователя',
         password: 'Пароль',
         confirmPassword: 'Подтвердите пароль',
         signup: 'Зарегистрироваться',
         alreadyRegistered: 'Зарегистрированы в Hexlet Chat?',
         login: 'Войти',
-        usernameTaken: 'Имя пользователя уже занято',
+        usernameTaken: 'Такой пользователь уже существует',
         validation: {
-          usernameMin: 'Имя должно содержать от 3 до 20 символов',
-          usernameMax: 'Имя должно содержать до 20 символов',
-          passwordMin: 'Пароль от 6 символов',
+          username: 'От 3 до 20 символов',
+          password: 'Не менее 6 символов',
           confirmPassword: 'Пароли должны совпадать',
+          required: 'Обязательное поле',
         },
       },
       chat: {
         actions: 'Действия',
         channels: 'Каналы',
         chatIn: 'Чат в',
+        channelName: 'Имя канала',
         newMessage: 'Введите сообщение...',
         addChannel: 'Добавить канал',
         renameChannel: 'Переименовать канал',
@@ -44,14 +46,23 @@ const resources = {
         cancel: 'Отмена',
         delete: 'Удалить',
         send: 'Отправить',
+        messages: '{{count}} сообщение',
+        messages_plural: '{{count}} сообщения',
+        messages_many: '{{count}} сообщений',
         notifications: {
           networkError: 'Ошибка сети. Проверьте подключение.',
           fetchError: 'Ошибка загрузки данных.',
-          channelCreated: 'Канал успешно создан.',
-          channelRenamed: 'Канал успешно переименован.',
-          channelDeleted: 'Канал успешно удалён.',
-          required: 'Поле обязательное для заполнения',
+          channelCreated: 'Канал создан',
+          channelRenamed: 'Канал переименован',
+          channelDeleted: 'Канал удалён',
         },
+      },
+      validation: {
+        unique: 'Имя канала уже занято',
+        username: 'От 3 до 20 символов',
+        password: 'Не менее 6 символов',
+        confirmPassword: 'Пароли должны совпадать',
+        required: 'Обязательное поле',
       },
       home: {
         welcome: 'Главная страница',
@@ -59,9 +70,18 @@ const resources = {
       notFound: {
         message: '404: Страница не найдена',
       },
+      errorBoundary: {
+        wrong: 'Something went wrong:',
+        try: 'Try again',
+      },
+      hidden: {
+        add: '+',
+        control: 'Управление каналом',
+      },
     },
   },
 };
+
 i18n.use(initReactI18next).init({
   resources,
   lng: 'ru', // Дефолтная локаль
@@ -69,5 +89,7 @@ i18n.use(initReactI18next).init({
   interpolation: {
     escapeValue: false, // React сам защищает от XSS
   },
+  pluralSeparator: '_',
 });
+
 export default i18n;

@@ -1,8 +1,24 @@
 import { io } from 'socket.io-client';
-const token = localStorage.getItem('token');
-const socket = io('http://localhost:5000', {
-  auth: {
-    token,
-  },
-});
-export default socket;
+
+const socket = io();
+
+const initializeSocket = ({ dispatch }) => {
+  // Подписка на события
+  socket.on('newMessage', (payload) => {
+    dispatch({ type: 'chat/socket/newMessage', payload });
+  });
+
+  socket.on('newChannel', (payload) => {
+    dispatch({ type: 'chat/socket/newChannel', payload });
+  });
+
+  socket.on('removeChannel', (payload) => {
+    dispatch({ type: 'chat/socket/removeChannel', payload });
+  });
+
+  socket.on('renameChannel', (payload) => {
+    dispatch({ type: 'chat/socket/renameChannel', payload });
+  });
+};
+
+export { socket, initializeSocket };

@@ -1,7 +1,7 @@
 {
   "name": "@hexlet/code",
   "version": "1.0.0",
-  "description": "Slack-чат",
+  "description": "Slack-Chat",
   "main": "src/index.js",
   "scripts": {
     "postinstall": "cd frontend && npm ci",

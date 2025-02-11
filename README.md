@@ -22,7 +22,7 @@ node.js v16 or later recommended
 ### Clone repository
 
 ```
-git clone https://github.com/Diana-coder-tech/frontend-project-12.git
+git clone https://github.com/user-3a9afc676c66a4ad/frontend-project-12.git
 ```
 
 ### Install dependencies
