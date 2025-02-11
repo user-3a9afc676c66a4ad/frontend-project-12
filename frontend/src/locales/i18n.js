@@ -50,6 +50,7 @@ const resources = {
           channelCreated: 'Канал успешно создан.',
           channelRenamed: 'Канал успешно переименован.',
           channelDeleted: 'Канал успешно удалён.',
+          required: 'Поле обязательное для заполнения',
         },
       },
       home: {

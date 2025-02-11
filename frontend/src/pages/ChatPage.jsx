@@ -4,6 +4,7 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import leoProfanity from 'leo-profanity';
 import { fetchChatData, sendMessage, addChannel, removeChannel, renameChannel } from '../store/chatSlice';
 import { Modal, Button, Dropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
@@ -21,6 +22,7 @@ const ChatPage = () => {
   const isInitialRender = useRef(true);
 
   useEffect(() => {
+    leoProfanity.loadDictionary('ru');
     dispatch(fetchChatData())
       .then(() => {
         if (channels.length > 0) {
@@ -41,7 +43,8 @@ const ChatPage = () => {
 
   const handleSendMessage = (messageBody) => {
     if (currentChannel) {
-      dispatch(sendMessage({ channelId: currentChannel, body: messageBody })).catch(() => {
+      const cleanedMessage = leoProfanity.clean(messageBody);
+      dispatch(sendMessage({ channelId: currentChannel, body: cleanedMessage })).catch(() => {
         toast.error(t('chat.notifications.networkError'));
       });
     }
@@ -73,7 +76,8 @@ const ChatPage = () => {
   const handleRenameChannel = async (newName) => {
     try {
       if (selectedChannel) {
-        await dispatch(renameChannel({ id: selectedChannel.id, name: newName })).unwrap();
+        const cleanedName = leoProfanity.clean(newName);
+        await dispatch(renameChannel({ id: selectedChannel.id, name: cleanedName })).unwrap();
         toast.success(t('chat.notifications.channelRenamed'));
         setModalType(null);
       }
@@ -86,7 +90,7 @@ const ChatPage = () => {
     name: Yup.string()
       .min(3, t('validation.usernameMin'))
       .max(20, t('validation.usernameMax'))
-      .required(t('validation.required'))
+      .required(t('signup.validation.required'))
       .test('unique', t('validation.unique'), (value) => !channels.some((channel) => channel.name === value)),
   });
 
