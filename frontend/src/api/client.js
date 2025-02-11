@@ -16,7 +16,7 @@ apiClient.interceptors.request.use((config) => {
   }
   return config;
 });
-
+// prettier-ignore
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -25,7 +25,7 @@ apiClient.interceptors.response.use(
       window.location.href = '/login';
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 export default apiClient;

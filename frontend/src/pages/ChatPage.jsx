@@ -143,7 +143,8 @@ const ChatPage = () => {
             <p className="m-0">
               <b>
                 #
-                {channels.find((ch) => ch.id === currentChannel)?.name}</b>
+                {channels.find((ch) => ch.id === currentChannel)?.name}
+              </b>
             </p>
             <span className="text-muted">{`${t('chat.messages', { count: messageCount })}`}</span>
           </div>

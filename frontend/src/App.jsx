@@ -33,25 +33,31 @@ const App = () => {
                 <Route
                   path="/login"
                   element={
-                    (<ProtectedRoute redirectTo="/chat" inverse>
-                      <LoginPage />
-                    </ProtectedRoute>)
+                    (
+                      <ProtectedRoute redirectTo="/chat" inverse>
+                        <LoginPage />
+                      </ProtectedRoute>
+                    )
                   }
                 />
                 <Route
                   path="/signup"
                   element={
-                    (<ProtectedRoute redirectTo="/chat" inverse>
-                      <SignupPage />
-                    </ProtectedRoute>)
+                    (
+                      <ProtectedRoute redirectTo="/chat" inverse>
+                        <SignupPage />
+                      </ProtectedRoute>
+                    )
                   }
                 />
                 <Route
                   path="/chat"
                   element={
-                    (<ProtectedRoute redirectTo="/login">
-                      <ChatPage />
-                    </ProtectedRoute>)
+                    (
+                      <ProtectedRoute redirectTo="/login">
+                        <ChatPage />
+                      </ProtectedRoute>
+                     )
                   }
                 />
                 <Route path="/" element={<Navigate to="/login" replace />} />
