@@ -5,30 +5,27 @@ body {
 }
 
 #root {
-  height: 100%; /* Устанавливаем 100% высоты для root */
-  display: flex; /* Для управления размещением элементов внутри */
-  flex-direction: column; /* Чтобы элементы располагались вертикально */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .container {
   height: 100%;
 }
 
-/* Общие стили для кнопок */
 .nav-item .btn {
-  background-color: white !important; /* Полностью белый фон */
-  color: black !important; /* Текст черный */
-  border: none !important; /* Убираем обводку */
-  box-shadow: none !important; /* Убираем тень */
+  background-color: white !important;
+  color: black !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
-/* Стили для активных кнопок */
 .nav-item .btn.btn-secondary {
-  background-color: #6c757d !important; /* Серый цвет фона */
-  color: white !important; /* Белый текст */
+  background-color: #6c757d !important;
+  color: white !important;
 }
 
-/* Стили для группы кнопок с дропдауном */
 .custom-dropdown .btn,
 .custom-dropdown .dropdown-toggle {
   background-color: white !important;
@@ -37,27 +34,24 @@ body {
   box-shadow: none !important;
 }
 
-/* Стили для активной группы кнопок с дропдауном */
 .custom-dropdown.active .btn,
 .custom-dropdown.active .dropdown-toggle {
-  background-color: #6c757d !important; /* Серый фон */
-  color: white !important; /* Белый текст */
+  background-color: #6c757d !important;
+  color: white !important;
 }
 
-/* Убираем обводку и тень у выпадающего меню */
 .custom-dropdown .dropdown-menu {
   box-shadow: none !important;
 }
 
-/* Стили для пунктов выпадающего меню */
 .custom-dropdown .dropdown-item:hover,
 .custom-dropdown .dropdown-item:focus {
-  background-color: #f8f9fa !important; /* Светло-серый фон при наведении */
-  color: black !important; /* Черный текст */
+  background-color: #f8f9fa !important;
+  color: black !important;
 }
 
 .chat-messages {
   flex-grow: 1;
   overflow-y: auto;
-  max-height: calc(100% - 10rem); /* Убедитесь, что высота корректна */
+  max-height: calc(100% - 10rem);
 }

@@ -1,10 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+/* eslint-disable react/prop-types */
+import { useEffect, useRef } from 'react';
 
 const MessageList = ({ messages, currentChannel, newMessage }) => {
   const messagesBoxRef = useRef(null);
   const isUserScrollingMessages = useRef(false);
 
-  // Обработчик прокрутки
   const handleScrollMessages = () => {
     const { scrollTop, scrollHeight, clientHeight } = messagesBoxRef.current;
     if (scrollTop + clientHeight !== scrollHeight) {
@@ -14,7 +14,6 @@ const MessageList = ({ messages, currentChannel, newMessage }) => {
     }
   };
 
-  // Прокрутка при добавлении нового сообщения
   useEffect(() => {
     if (!isUserScrollingMessages.current && messagesBoxRef.current) {
       const { scrollHeight, clientHeight } = messagesBoxRef.current;
@@ -22,7 +21,6 @@ const MessageList = ({ messages, currentChannel, newMessage }) => {
     }
   }, [messages]);
 
-  // Прокрутка при смене канала
   useEffect(() => {
     if (messagesBoxRef.current && messages.length > 0) {
       const { scrollHeight, clientHeight } = messagesBoxRef.current;
@@ -30,7 +28,6 @@ const MessageList = ({ messages, currentChannel, newMessage }) => {
     }
   }, [currentChannel, messages]);
 
-  // Прокрутка при отправке нового сообщения
   useEffect(() => {
     if (messagesBoxRef.current && newMessage) {
       const { scrollHeight, clientHeight } = messagesBoxRef.current;

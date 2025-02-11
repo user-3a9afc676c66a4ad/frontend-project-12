@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Spinner } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -44,7 +44,6 @@ const ChatPage = () => {
     dispatch(sendMessage({ body: cleanMessage, username, channelId: currentChannel }));
   };
 
-  // Функция добавления канала
   const handleAddChannel = async (values, { resetForm }) => {
     try {
       const cleanedName = leoProfanity.clean(values.name);
@@ -60,7 +59,6 @@ const ChatPage = () => {
     }
   };
 
-  // Функция удаления канала
   const handleRemoveChannel = async () => {
     try {
       if (selectedChannel && selectedChannel.id !== defaultChannelId && !isProtectedChannel(selectedChannel)) {
@@ -76,7 +74,6 @@ const ChatPage = () => {
     }
   };
 
-  // Функция переименования канала
   const handleRenameChannel = async (newName) => {
     try {
       if (selectedChannel && !isProtectedChannel(selectedChannel)) {
@@ -108,7 +105,6 @@ const ChatPage = () => {
     }
   }, [messages]);
 
-  // Если статус "loading", отображаем спиннер
   if (status === 'loading') {
     return (
       <div className="d-flex justify-content-center align-items-center w-100 h-100">

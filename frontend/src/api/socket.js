@@ -3,7 +3,6 @@ import { io } from 'socket.io-client';
 const socket = io();
 
 const initializeSocket = ({ dispatch }) => {
-  // Подписка на события
   socket.on('newMessage', (payload) => {
     dispatch({ type: 'chat/socket/newMessage', payload });
   });
