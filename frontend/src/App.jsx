@@ -36,7 +36,7 @@ const App = () => {
                   element={
                     (
                       <GuestRoute redirectTo={routes.chat()}>
-                         <LoginPage />
+                        <LoginPage />
                       </GuestRoute>
                     )
                   }
