@@ -9,7 +9,7 @@ import {
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { AuthProvider, useAuth } from './contexts/AuthCont';
-import { routes } from './routes';
+import routes from './routes';
 import LoginPage from './pages/LoginPage';
 import ChatPage from './pages/ChatPage';
 import SignupPage from './pages/SignupPage';

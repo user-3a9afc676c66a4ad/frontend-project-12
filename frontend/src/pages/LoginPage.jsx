@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../store/userSlice';
 import apiClient from '../api/client';
-import { routes } from '../routes';
+import routes from '../routes';
 import { useAuth } from '../contexts/AuthCont';
 
 const LoginPage = () => {
