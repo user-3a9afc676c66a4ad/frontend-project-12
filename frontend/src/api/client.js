@@ -23,7 +23,7 @@ apiClient.interceptors.response.use(
   (error) => {
     if (
       error.response
-      && error.response.status === 401 
+      && error.response.status === 401
       && window.location.pathname !== routes.login()
     ) {
       localStorage.removeItem('token');
