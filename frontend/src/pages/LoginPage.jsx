@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../store/userSlice';
 import apiClient from '../api/client';
+import { routes } from '../routes';
 import { useAuth } from '../contexts/AuthCont';
 
 const LoginPage = () => {
@@ -17,7 +18,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/chat');
+      navigate(routes.chat());
     }
   }, [isAuthenticated, navigate]);
 
@@ -28,7 +29,7 @@ const LoginPage = () => {
 
   const handleLogin = async (values, { resetForm }) => {
     try {
-      const response = await apiClient.post('/api/v1/login', {
+      const response = await apiClient.post(routes.api.login(), {
         username: values.username,
         password: values.password,
       });
@@ -36,7 +37,7 @@ const LoginPage = () => {
       login(response.data.token);
       dispatch(setUser({ username: values.username }));
       resetForm();
-      navigate('/chat');
+      navigate(routes.chat());
     } catch (error) {
       if (error.response?.status === 401) {
         setGeneralError(t('login.error'));

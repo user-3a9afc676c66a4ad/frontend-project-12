@@ -9,6 +9,7 @@ import {
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { AuthProvider, useAuth } from './contexts/AuthCont';
+import { routes } from './routes';
 import LoginPage from './pages/LoginPage';
 import ChatPage from './pages/ChatPage';
 import SignupPage from './pages/SignupPage';
@@ -21,7 +22,7 @@ const App = () => {
   useEffect(() => {
     initializeSocket({ dispatch });
   }, [dispatch]);
-  // prettier-ignore
+
   return (
     <ErrorBoundary>
       <Router>
@@ -31,36 +32,30 @@ const App = () => {
             <div className="container h-100 my-4 overflow-hidden rounded shadow">
               <Routes>
                 <Route
-                  path="/login"
+                  path={routes.login()}
                   element={
-                    (
-                      <ProtectedRoute redirectTo="/chat" inverse>
-                        <LoginPage />
-                      </ProtectedRoute>
-                    )
+                    <GuestRoute redirectTo={routes.chat()}>
+                      <LoginPage />
+                    </GuestRoute>
                   }
                 />
                 <Route
-                  path="/signup"
+                  path={routes.signup()}
                   element={
-                    (
-                      <ProtectedRoute redirectTo="/chat" inverse>
-                        <SignupPage />
-                      </ProtectedRoute>
-                    )
+                    <GuestRoute redirectTo={routes.chat()}>
+                      <SignupPage />
+                    </GuestRoute>
                   }
                 />
                 <Route
-                  path="/chat"
+                  path={routes.chat()}
                   element={
-                    (
-                      <ProtectedRoute redirectTo="/login">
-                        <ChatPage />
-                      </ProtectedRoute>
-                     )
+                    <PrivateRoute redirectTo={routes.login()}>
+                      <ChatPage />
+                    </PrivateRoute>
                   }
                 />
-                <Route path="/" element={<Navigate to="/login" replace />} />
+                <Route path={routes.home()} element={<Navigate to={routes.login()} replace />} />
               </Routes>
             </div>
           </div>
@@ -89,12 +84,18 @@ const Header = () => {
   );
 };
 
+// Защита приватных роутов (только для авторизованных)
 // eslint-disable-next-line react/prop-types
-const ProtectedRoute = ({ children, redirectTo, inverse = false }) => {
+const PrivateRoute = ({ children, redirectTo }) => {
   const { isAuthenticated } = useAuth();
-  const shouldRedirect = inverse ? isAuthenticated : !isAuthenticated;
+  return isAuthenticated ? children : <Navigate to={redirectTo} replace />;
+};
 
-  return shouldRedirect ? <Navigate to={redirectTo} replace /> : children;
+// Защита публичных роутов (только для гостей)
+// eslint-disable-next-line react/prop-types
+const GuestRoute = ({ children, redirectTo }) => {
+  const { isAuthenticated } = useAuth();
+  return isAuthenticated ? <Navigate to={redirectTo} replace /> : children;
 };
 
 export default App;

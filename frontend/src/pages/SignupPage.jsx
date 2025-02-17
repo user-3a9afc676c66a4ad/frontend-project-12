@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthCont';
+import { routes } from '../routes';
 import apiClient from '../api/client';
 
 const SignupPage = () => {
@@ -19,7 +20,7 @@ const SignupPage = () => {
 
   const handleSignup = async (values, { setErrors }) => {
     try {
-      const response = await apiClient.post('/api/v1/signup', {
+      const response = await apiClient.post(routes.api.signup(), {
         username: values.username,
         password: values.password,
       });
