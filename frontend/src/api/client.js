@@ -21,7 +21,11 @@ apiClient.interceptors.request.use((config) => {
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response && error.response.status === 401 && window.location.pathname !== routes.login()) {
+    if (
+      error.response && 
+      error.response.status === 401 && 
+      window.location.pathname !== routes.login()
+    ) {
       localStorage.removeItem('token');
       window.location.href = routes.login();
     }

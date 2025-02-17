@@ -22,7 +22,7 @@ const App = () => {
   useEffect(() => {
     initializeSocket({ dispatch });
   }, [dispatch]);
-
+  // prettier-ignore
   return (
     <ErrorBoundary>
       <Router>
@@ -34,25 +34,31 @@ const App = () => {
                 <Route
                   path={routes.login()}
                   element={
-                    <GuestRoute redirectTo={routes.chat()}>
-                      <LoginPage />
-                    </GuestRoute>
+                    (
+                      <GuestRoute redirectTo={routes.chat()}>
+                         <LoginPage />
+                      </GuestRoute>
+                    )
                   }
                 />
                 <Route
                   path={routes.signup()}
                   element={
-                    <GuestRoute redirectTo={routes.chat()}>
-                      <SignupPage />
-                    </GuestRoute>
+                    (
+                      <GuestRoute redirectTo={routes.chat()}>
+                        <SignupPage />
+                      </GuestRoute>
+                    )
                   }
                 />
                 <Route
                   path={routes.chat()}
                   element={
-                    <PrivateRoute redirectTo={routes.login()}>
-                      <ChatPage />
-                    </PrivateRoute>
+                    (
+                      <PrivateRoute redirectTo={routes.login()}>
+                        <ChatPage />
+                      </PrivateRoute>
+                    )
                   }
                 />
                 <Route path={routes.home()} element={<Navigate to={routes.login()} replace />} />
@@ -84,14 +90,12 @@ const Header = () => {
   );
 };
 
-// Защита приватных роутов (только для авторизованных)
 // eslint-disable-next-line react/prop-types
 const PrivateRoute = ({ children, redirectTo }) => {
   const { isAuthenticated } = useAuth();
   return isAuthenticated ? children : <Navigate to={redirectTo} replace />;
 };
 
-// Защита публичных роутов (только для гостей)
 // eslint-disable-next-line react/prop-types
 const GuestRoute = ({ children, redirectTo }) => {
   const { isAuthenticated } = useAuth();
